@@ -1,0 +1,2 @@
+exports.requireAuth = (req, res, next) => { if (!req.session.user) { req.session.flash = { type: 'warning', text: 'Entre para acessar esta página.' }; return res.redirect('/login'); } next(); };
+exports.requireRole = (role) => (req, res, next) => { if (!req.session.user) { req.session.flash = { type: 'warning', text: 'Entre para acessar esta página.' }; return res.redirect('/login'); } if (req.session.user.role !== role) return res.status(403).render('error', { title: 'Sem permissão', message: 'Você não tem permissão para acessar esta funcionalidade.' }); next(); };
